@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет администратора: Список пользователей</title>
+</head>
+<body>
+    <form method="get" action="/logout">
+        <button type="submit">Выйти из личного кабинета</button>
+    </form>
+    <h1>Все пользователи</h1>
+    <table>
+        <tr>
+            <th>Идентификатор</th>
+            <th>Логин/Имя</th>
+            <th>Роль</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.getId()}"></td>
+            <td th:text="${user.getLogin()}"></td>
+            <td>
+                <form method="post" th:action="@{/admin/user/update-role/{id}(id=${user.getId()})}">
+                    <select name="userRole">
+                        <option th:value="${user.getRole()}"
+                                th:text="${#strings.replace(user.getRole(), 'ROLE_', '')}">
+                        </option>
+                        <option th:each="role : ${roles}"
+                                th:if="${!#strings.equals(role, user.getRole())}"
+                                th:value="${role}"
+                                th:text="${#strings.replace(role, 'ROLE_', '')}">
+                        </option>
+                    </select>
+                    <input type="submit" value="Изменить"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +19,18 @@ public class PersonService {
     public PersonService(PersonRepository personRepository, PasswordEncoder passwordEncoder) {
         this.personRepository = personRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public List<Person> findAll() {
+        return personRepository.findAll();
+    }
+
+    public Person getById(int id) {
+        return personRepository.getReferenceById(id);
+    }
+
+    public Person update(Person person) {
+        return personRepository.save(person);
     }
 
     public Person findByLogin(Person person){

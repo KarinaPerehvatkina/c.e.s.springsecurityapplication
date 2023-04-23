@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет администратора: Список заказов</title>
+</head>
+<body>
+    <form method="get" action="/logout">
+        <button type="submit">Выйти из личного кабинета</button>
+    </form>
+    <h1>Все заказы</h1>
+    <form method="get" th:action="@{/admin/orders/search}">
+        <input type="text"
+               style="outline: none"
+               placeholder="####"
+               title="Введите четыре последних символа номера заказа"
+               name="q"
+               id="orderSearch"/>
+        <input disabled type="submit" value="Найти" id="orderSearchButton"/>
+        <style>
+            input:disabled {
+                cursor: not-allowed;
+            }
+        </style>
+        <script>
+            var requiredLength = 4;
+            var input = document.getElementById('orderSearch');
+            input.addEventListener("input", function updateValue(e) {
+                if (input.value.length > requiredLength) input.value = input.value.slice(0, requiredLength);
+                else {
+                    var cleared = input.value.match(/[a-z0-9]{0,4}/i);
+                    input.value = cleared ? cleared[0] : '';
+                }
+                document.getElementById('orderSearchButton').disabled = input.value.length < requiredLength;
+            });
+        </script>
+    </form>
+    <p th:if="${orders.size == 0}">Список пуст.</p>
+    <table th:if="${orders.size != 0}">
+        <tr>
+            <th>Идентификатор</th>
+            <th>Номер заказа</th>
+            <th>Заказанный продукт</th>
+            <th>Заказчик</th>
+            <th>Кол-во</th>
+            <th>Общая стоимость заказа</th>
+            <th>Время создания заказа</th>
+            <th>Статус</th>
+        </tr>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.getId()}"></td>
+            <td th:text="${order.getNumber()}"></td>
+            <td th:text="${order.getProduct().getTitle()} + ' (#' + ${order.getProduct().getId()} + ')'"></td>
+            <td th:text="${order.getPerson().getLogin()} + ' (#' + ${order.getPerson().getId()} + ')'"></td>
+            <td th:text="${order.getCount()}"></td>
+            <td th:text="${order.getPrice()}"></td>
+            <td th:text="${order.getDateTime()}"></td>
+            <td>
+                <form method="post" th:action="@{/admin/order/update-status/{id}(id=${order.getId()})}">
+                    <select name="orderStatus">
+                        <option th:value="${order.getStatus()}" th:text="${order.getStatus()}"></option>
+                        <option th:each="status : ${statuses}"
+                                th:if="${!#strings.equals(status.name(), order.getStatus().name())}"
+                                th:value="${status}"
+                                th:text="${status}">
+                        </option>
+                    </select>
+                    <input type="submit" value="Изменить"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

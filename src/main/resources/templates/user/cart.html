@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+    <style>
+        div.body{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: left;
+        }
+        div.block {
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            margin: 15px;
+            padding: 25px;
+            border: 2px solid #ccc;
+            box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        div.block:hover{
+            margin: 5px;
+            padding: 35px;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
+        }
+        div.block img{
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+        }
+        div.block p{
+            margin: 5px 0;
+        }
+        a, h1, h3{
+            text-align: center;
+            font-weight: bold
+        }
+    </style>
+</head>
+<body>
+    <form method="get" action="/logout">
+        <button type="submit">Выйти из личного кабинета</button>
+    </form>
+    <h3>Корзина товаров</h3>
+    <div class="body">
+    <div class="block" th:each="product : ${cart_product}">
+        <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+        <br>
+        <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+        <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+     <a th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить</a>
+        <hr>
+    </div>
+    </div>
+        <h3 th:text="'Итоговая цена: ' + ${price}"></h3>
+    <a href="/order/create">Оформить заказ</a>
+</body>
+</html>
