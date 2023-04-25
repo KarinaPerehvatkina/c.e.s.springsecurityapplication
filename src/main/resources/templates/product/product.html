@@ -39,9 +39,6 @@
     </style>
 </head>
 <body>
-<form method="get" action="/logout">
-    <button type="submit">Выйти из личного кабинета</button>
-</form>
 <h1>Главная страница магазина</h1>
 <h3>Cортировка, поиск, фильтрация</h3>
 <form th:method="POST" th:action="@{/product/search}">
@@ -86,6 +83,7 @@
         <br>
         <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
         <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+        <a th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить товар в корзину</a>
         <hr>
     </div>
 </div>
@@ -97,6 +95,7 @@
         <br>
         <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
         <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+        <a th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить товар в корзину</a>
         <hr>
         </div>
     </div>

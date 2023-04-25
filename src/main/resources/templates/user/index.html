@@ -106,6 +106,7 @@
         <br>
         <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
         <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+        <a th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить товар в корзину</a>
         <hr>
     </div>
 </div>
