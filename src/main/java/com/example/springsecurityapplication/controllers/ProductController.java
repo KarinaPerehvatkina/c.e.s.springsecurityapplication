@@ -39,11 +39,11 @@ public class ProductController {
                 if(price.equals("sorted_by_ascending_price")) {
                     if (!contract.isEmpty()) {
                         if (contract.equals("butter")) {
-                            model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do), 1));
+                            model.addAttribute("search_product", productRepository.findByTitleAndCategoryAndPriceBetweenOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do), 1));
                         } else if (contract.equals("oil")) {
-                            model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do), 2));
+                            model.addAttribute("search_product", productRepository.findByTitleAndCategoryAndPriceBetweenOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do), 2));
                         } else if (contract.equals("cream")) {
-                            model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do), 3));
+                            model.addAttribute("search_product", productRepository.findByTitleAndCategoryAndPriceBetweenOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do), 3));
                         }
                     } else {
                         model.addAttribute("search_product", productRepository.findByTitleOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do)));
@@ -52,11 +52,11 @@ public class ProductController {
                     if(!contract.isEmpty()){
                         System.out.println(contract);
                         if(contract.equals("butter")){
-                            model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do), 1));
+                            model.addAttribute("search_product", productRepository.findByTitleAndCategoryAndPriceBetweenOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do), 1));
                         }else if (contract.equals("oil")) {
-                            model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do), 2));
+                            model.addAttribute("search_product", productRepository.findByTitleAndCategoryAndPriceBetweenOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do), 2));
                         } else if (contract.equals("cream")) {
-                            model.addAttribute("search_product", productRepository.findByTitleAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do), 3));
+                            model.addAttribute("search_product", productRepository.findByTitleAndCategoryAndPriceBetweenOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do), 3));
                         }
                     }  else {
                         model.addAttribute("search_product", productRepository.findByTitleOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(ot), Float.parseFloat(Do)));
